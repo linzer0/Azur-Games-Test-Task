@@ -1,0 +1,11 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/projectSettingsUpdater.xml
+/modules.xml
+/.idea.Azur Games Test Task.iml
+/contentModel.xml
+# Datasource local storage ignored files
+/../../../../../../../:\Projects\Unity\Azur Games Test Task\.idea\.idea.Azur Games Test Task\.idea/dataSources/
+/dataSources.local.xml
