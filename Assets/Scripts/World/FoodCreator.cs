@@ -37,11 +37,14 @@ namespace World
                         
                         var spawnPosition = new Vector3(position.Item1 * TileOffset, 0, position.Item2 * TileOffset);
                         var foodGameObject = Instantiate(FoodPrefab, spawnPosition, Quaternion.identity);
-                        
-                        animals[i].MoveTo.PositionOnMap = position;
-                        animals[i].MoveTo.NextPosition = spawnPosition;
-                        animals[i].MoveTo.Start = true;
 
+                        //REFACTOR
+                        animals[i].MoveTo.AnimalPosition = animals[i].CurrentPosition;
+                        animals[i].MoveTo.FoodPositionOnMap = position;
+                        animals[i].MoveTo.FoodPosition = spawnPosition;
+                        animals[i].MoveTo.Map = map;
+
+                        
                         i++;
                     }
                 }

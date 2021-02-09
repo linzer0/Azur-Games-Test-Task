@@ -46,8 +46,18 @@ namespace World
             
             AnimalHolder = AnimalCreator.CreateAnimals(AnimalsAmount, ref GameMap);
             FoodCreator.CreateFood(ref GameMap, ref AnimalHolder, Speed);
+            StartSimulation();
             
             StartButton.onClick.RemoveListener(GetValuesFromSlider);
+        }
+
+        public void StartSimulation()
+        {
+            foreach (var animalHolder in AnimalHolder)
+            {
+                animalHolder.MoveTo.CalculateNextPosition();
+                
+            }
         }
     }
 }
