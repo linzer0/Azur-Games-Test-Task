@@ -41,6 +41,7 @@ namespace World
             MapSize = (int) MapSizeSlider.value;
             AnimalsAmount = (int) AnimalsAmountSlider.value;
             Speed = (int) SpeedValueSlider.value;
+            GameSettings.AnimalSpeed = Speed;
             
             GameMap = MapCreator.CreateMap(MapSize);
             

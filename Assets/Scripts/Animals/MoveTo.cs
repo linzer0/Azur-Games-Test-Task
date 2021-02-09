@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Animals
 {
     public class MoveTo : MonoBehaviour
     {
-        private int DeltaDistance = 1;
+        private float DeltaDistance = 0.25f;
 
         //TODO Get from input
         public int Speed = 10;
@@ -28,14 +29,16 @@ namespace Animals
                 if (Vector3.Distance(transform.position, NextMovingPosition) > DeltaDistance)
                 {
                     transform.position =
-                        Vector3.MoveTowards(transform.position, NextMovingPosition, Speed * Time.deltaTime);
+                        Vector3.MoveTowards(transform.position, NextMovingPosition,
+                            GameSettings.AnimalSpeed * GameSettings.SimulationSpeed * Time.deltaTime);
                 }
                 else
                 {
+                    transform.position = NextMovingPosition;
+
                     if (AnimalPosition == FoodPositionOnMap)
                     {
                         Debug.Log("We're found food");
-                        transform.position = NextMovingPosition;
                         FoodFound = true;
                         //TODO
                         //CREATE NEW FOOD
@@ -62,16 +65,18 @@ namespace Animals
 
         private (int, int) GetNearestNextPosition()
         {
-            var neighbourPositions = new[]
+            List<(int, int)> neighbourPositions = new List<(int, int)>()
             {
                 (AnimalPosition.Item1 + 1, AnimalPosition.Item2), (AnimalPosition.Item1 - 1, AnimalPosition.Item2),
                 (AnimalPosition.Item1, AnimalPosition.Item2 + 1), (AnimalPosition.Item1, AnimalPosition.Item2 - 1)
             };
 
-            int minimalIndex = -1;
-            int distance = 10;
+            Helper.Shuffle(neighbourPositions);
 
-            for (int i = 0; i < neighbourPositions.Length; i++)
+            int minimalElementIndex = -1;
+            int minimalDistanceToAnotherPosition = 100;
+
+            for (int i = 0; i < neighbourPositions.Count; i++)
             {
                 if (neighbourPositions[i].Item1 >= 0 && neighbourPositions[i].Item1 < Map.GetLength(0) &&
                     (neighbourPositions[i].Item2 >= 0 && neighbourPositions[i].Item2 < Map.GetLength(0)))
@@ -79,21 +84,21 @@ namespace Animals
                     if (GameSettings.Map[neighbourPositions[i].Item1, neighbourPositions[i].Item2] != 2)
                     {
                         var distanceToPosition = DistanceBetweenTwoDots(FoodPositionOnMap, neighbourPositions[i]);
-                        if (distance >= distanceToPosition)
+                        if (minimalDistanceToAnotherPosition >= distanceToPosition)
                         {
-                            distance = distanceToPosition;
-                            minimalIndex = i;
+                            minimalDistanceToAnotherPosition = distanceToPosition;
+                            minimalElementIndex = i;
                         }
                     }
                 }
             }
 
-            if (minimalIndex == -1)
+            if (minimalElementIndex == -1)
             {
                 return AnimalPosition;
             }
 
-            return neighbourPositions[minimalIndex];
+            return neighbourPositions[minimalElementIndex];
         }
 
         private int DistanceBetweenTwoDots((int, int) first, (int, int) second)

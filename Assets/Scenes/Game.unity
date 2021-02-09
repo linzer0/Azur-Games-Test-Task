@@ -581,7 +581,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TilePrefab: {fileID: 8765586891702946897, guid: d07561e03d0c345448803b68b636e3d5, type: 3}
-  TileOffset: 10
 --- !u!1 &1223500065
 GameObject:
   m_ObjectHideFlags: 0
