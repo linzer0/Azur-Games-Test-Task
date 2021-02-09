@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using Animals;
+using Gameplay;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Gameplay
+namespace World
 {
-    public class SimulationComponent : MonoBehaviour
+    public class SimulationCreator : MonoBehaviour
     {
         private int MapSize;
         private int AnimalsAmount;

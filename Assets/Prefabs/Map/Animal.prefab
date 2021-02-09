@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4799598242647748098}
   - component: {fileID: 4799598242647748101}
   - component: {fileID: 9121895443852732204}
-  - component: {fileID: 5180112773039808806}
+  - component: {fileID: 5407106816335397143}
   m_Layer: 0
   m_Name: Animal
   m_TagString: Untagged
@@ -109,8 +109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c72e1dc7da354861aa3af7702419b469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodInformation: {fileID: 5180112773039808806}
---- !u!114 &5180112773039808806
+  moveTo: {fileID: 5407106816335397143}
+--- !u!114 &5407106816335397143
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,6 +119,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4799598242647748100}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42bd77ac6d554a978fedc8b6c67e766a, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f31f15785d04cf9ae9f046c32ab2ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 10
+  NextPosition: {x: 0, y: 0, z: 0}
+  Start: 0

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using Animals;
+using Gameplay;
 using UnityEngine;
 using Random = System.Random;
 
-namespace Gameplay
+namespace World
 {
     public class AnimalCreator : MonoBehaviour
     {

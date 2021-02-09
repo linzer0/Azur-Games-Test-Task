@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Animals;
+using Gameplay;
 using UnityEngine;
 using Random = System.Random;
 
-namespace Gameplay
+namespace World
 {
     public class FoodCreator : MonoBehaviour
     {
@@ -32,10 +34,14 @@ namespace Gameplay
                     if (map[position.Item1, position.Item2] == 0)
                     {
                         map[position.Item1, position.Item2] = 1;
-                        animals[i].FoodInformation.FoodPosition = position;
-
+                        
                         var spawnPosition = new Vector3(position.Item1 * TileOffset, 0, position.Item2 * TileOffset);
                         var foodGameObject = Instantiate(FoodPrefab, spawnPosition, Quaternion.identity);
+                        
+                        animals[i].MoveTo.PositionOnMap = position;
+                        animals[i].MoveTo.NextPosition = spawnPosition;
+                        animals[i].MoveTo.Start = true;
+
                         i++;
                     }
                 }
