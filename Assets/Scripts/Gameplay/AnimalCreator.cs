@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 namespace Gameplay
 {
@@ -14,15 +15,14 @@ namespace Gameplay
         public List<AnimalHolder> CreateAnimals(int amount, ref int[,] map)
         {
             var animalHolderList = new List<AnimalHolder>();
+            var random = new Random();
 
             AnimalsAmount = amount;
             MapSize = map.GetLength(0);
 
             for (int i = 0; i < AnimalsAmount;)
             {
-                Random.InitState(i);
-
-                var position = (Random.Range(0, MapSize - 1), Random.Range(0, MapSize - 1));
+                var position = (random.Next(0, MapSize - 1), random.Next(0, MapSize - 1));
                 if (map[position.Item1, position.Item2] != 2)
                 {
                     map[position.Item1, position.Item2] = 2;

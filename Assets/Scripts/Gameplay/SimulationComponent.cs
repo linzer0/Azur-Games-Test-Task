@@ -21,6 +21,9 @@ namespace Gameplay
         [SerializeField] private FoodCreator FoodCreator;
 
         private int[,] GameMap;
+        //0 - free
+        //1 - food
+        //2 - animal
         
         private List<AnimalHolder> AnimalHolder = new List<AnimalHolder>();
         
@@ -40,7 +43,8 @@ namespace Gameplay
             GameMap = MapCreator.CreateMap(MapSize);
             
             AnimalHolder = AnimalCreator.CreateAnimals(AnimalsAmount, ref GameMap);
-
+            // FoodCreator.CreateFood(ref GameMap, ref AnimalHolder, Speed);
+            
             StartButton.onClick.RemoveListener(GetValuesFromSlider);
         }
     }

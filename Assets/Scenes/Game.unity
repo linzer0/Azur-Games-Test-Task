@@ -1009,6 +1009,7 @@ GameObject:
   - component: {fileID: 1904095645}
   - component: {fileID: 1904095646}
   - component: {fileID: 1904095647}
+  - component: {fileID: 1904095648}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1048,6 +1049,7 @@ MonoBehaviour:
   SpeedValueSlider: {fileID: 1391874586}
   MapCreator: {fileID: 1193816463}
   AnimalCreator: {fileID: 1904095647}
+  FoodCreator: {fileID: 1904095648}
 --- !u!114 &1904095647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1061,6 +1063,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimalPrefab: {fileID: 4799598242647748100, guid: 9c8e4812238dcb7449f97703b2645b35, type: 3}
+--- !u!114 &1904095648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904095644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd88f4b326d3456f93cf72e630be4015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FoodPrefab: {fileID: 4799598242647748100, guid: ecf0997f442ea2b4b819553bc1a7de38, type: 3}
 --- !u!1 &2036704763
 GameObject:
   m_ObjectHideFlags: 0
