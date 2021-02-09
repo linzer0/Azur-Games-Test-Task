@@ -19,6 +19,7 @@ namespace Animals
 
 
         private Vector3 NextMovingPosition;
+        private bool FoodFound = false;
 
         void Update()
         {
@@ -31,18 +32,32 @@ namespace Animals
                 }
                 else
                 {
+                    if (AnimalPosition == FoodPositionOnMap)
+                    {
+                        Debug.Log("We're found food");
+                        transform.position = NextMovingPosition;
+                        FoodFound = true;
+                        //TODO
+                        //CREATE NEW FOOD
+                    }
+
                     Start = false;
-                    AnimalPosition = FoodPositionOnMap;
                 }
             }
         }
 
         public void CalculateNextPosition()
         {
-            var nextPosition = GetNearestNextPosition();
-            NextMovingPosition = new Vector3(nextPosition.Item1 * GameSettings.TileOffset, 0,
-                nextPosition.Item2 * GameSettings.TileOffset);
-            Start = true;
+            if (!FoodFound)
+            {
+                GameSettings.Map[AnimalPosition.Item1, AnimalPosition.Item2] = 0;
+                AnimalPosition = GetNearestNextPosition();
+                GameSettings.Map[AnimalPosition.Item1, AnimalPosition.Item2] = 2;
+
+                NextMovingPosition = new Vector3(AnimalPosition.Item1 * GameSettings.TileOffset, 0,
+                    AnimalPosition.Item2 * GameSettings.TileOffset);
+                Start = true;
+            }
         }
 
         private (int, int) GetNearestNextPosition()
@@ -53,17 +68,29 @@ namespace Animals
                 (AnimalPosition.Item1, AnimalPosition.Item2 + 1), (AnimalPosition.Item1, AnimalPosition.Item2 - 1)
             };
 
-            int minimalIndex = 0;
+            int minimalIndex = -1;
             int distance = 10;
 
             for (int i = 0; i < neighbourPositions.Length; i++)
             {
-                var distanceToPosition = DistanceBetweenTwoDots(FoodPositionOnMap, neighbourPositions[i]);
-                if (distance >= distanceToPosition)
+                if (neighbourPositions[i].Item1 >= 0 && neighbourPositions[i].Item1 < Map.GetLength(0) &&
+                    (neighbourPositions[i].Item2 >= 0 && neighbourPositions[i].Item2 < Map.GetLength(0)))
                 {
-                    distance = distanceToPosition;
-                    minimalIndex = i;
+                    if (GameSettings.Map[neighbourPositions[i].Item1, neighbourPositions[i].Item2] != 2)
+                    {
+                        var distanceToPosition = DistanceBetweenTwoDots(FoodPositionOnMap, neighbourPositions[i]);
+                        if (distance >= distanceToPosition)
+                        {
+                            distance = distanceToPosition;
+                            minimalIndex = i;
+                        }
+                    }
                 }
+            }
+
+            if (minimalIndex == -1)
+            {
+                return AnimalPosition;
             }
 
             return neighbourPositions[minimalIndex];

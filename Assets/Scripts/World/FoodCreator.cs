@@ -13,7 +13,7 @@ namespace World
 
         public void CreateFood(ref int[,] map, ref List<AnimalHolder> animals, int Speed)
         {
-            var random = new Random();
+            var random = new Random(new Random(0).Next(1, 10000));
 
             for (int i = 0; i < animals.Count;)
             {
@@ -25,26 +25,26 @@ namespace World
                 var distanceToPosition = Math.Abs(position.Item1 - animals[i].CurrentPosition.Item1) +
                                          Mathf.Abs(position.Item1 - animals[i].CurrentPosition.Item2);
 
-
-                if (distanceToPosition * GameSettings.TileOffset / Speed <= GameSettings.MaxTimeToFood)
+                // if (distanceToPosition * GameSettings.TileOffset / Speed <= GameSettings.MaxTimeToFood)
+                // {
+                // if (map[position.Item1, position.Item2] != 2)
                 {
-                    if (map[position.Item1, position.Item2] != 1)
-                    {
-                        map[position.Item1, position.Item2] = 1;
-                        
-                        var spawnPosition = new Vector3(position.Item1 * GameSettings.TileOffset, 0, position.Item2 * GameSettings.TileOffset);
-                        var foodGameObject = Instantiate(FoodPrefab, spawnPosition, Quaternion.identity);
+                    map[position.Item1, position.Item2] = 1;
 
-                        //REFACTOR
-                        animals[i].MoveTo.AnimalPosition = animals[i].CurrentPosition;
-                        animals[i].MoveTo.FoodPositionOnMap = position;
-                        animals[i].MoveTo.FoodPosition = spawnPosition;
-                        animals[i].MoveTo.Map = map;
+                    var spawnPosition = new Vector3(position.Item1 * GameSettings.TileOffset, 0,
+                        position.Item2 * GameSettings.TileOffset);
+                    var foodGameObject = Instantiate(FoodPrefab, spawnPosition, Quaternion.identity);
 
-                        
-                        i++;
-                    }
+                    //REFACTOR
+                    animals[i].MoveTo.AnimalPosition = animals[i].CurrentPosition;
+                    animals[i].MoveTo.FoodPositionOnMap = position;
+                    animals[i].MoveTo.FoodPosition = spawnPosition;
+                    animals[i].MoveTo.Map = map;
+
+
+                    i++;
                 }
+                // }
             }
         }
     }

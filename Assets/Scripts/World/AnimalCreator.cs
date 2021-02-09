@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Animals;
-using Gameplay;
 using UnityEngine;
 using Random = System.Random;
 
@@ -10,7 +9,6 @@ namespace World
     {
         [SerializeField] private GameObject AnimalPrefab;
         private int AnimalsAmount;
-        private int TileOffset = 10;
 
         private int MapSize;
 
@@ -25,11 +23,12 @@ namespace World
             for (int i = 0; i < AnimalsAmount;)
             {
                 var position = (random.Next(0, MapSize - 1), random.Next(0, MapSize - 1));
-                if (map[position.Item1, position.Item2] != 2)
+                if (GameSettings.Map[position.Item1, position.Item2] != 2)
                 {
-                    map[position.Item1, position.Item2] = 2;
+                    GameSettings.Map[position.Item1, position.Item2] = 2;
 
-                    var spawnPosition = new Vector3(position.Item1 * TileOffset, 0, position.Item2 * TileOffset);
+                    var spawnPosition = new Vector3(position.Item1 * GameSettings.TileOffset, 0,
+                        position.Item2 * GameSettings.TileOffset);
                     var animalGameObject = Instantiate(AnimalPrefab, spawnPosition, Quaternion.identity);
 
                     var animalHolder = animalGameObject.GetComponent<AnimalHolder>();

@@ -10,8 +10,7 @@ namespace Animals
         {
             get => moveTo;
             set => moveTo = value;
-        } 
-
+        }
 
         public (int, int) CurrentPosition;
     }
