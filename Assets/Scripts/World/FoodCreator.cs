@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Animals;
-using Gameplay;
 using UnityEngine;
 using Random = System.Random;
 
@@ -11,8 +10,6 @@ namespace World
     {
         [SerializeField] private GameObject FoodPrefab;
 
-        private int MaxTimeToFood = 5;
-        private int TileOffset = 10;
 
         public void CreateFood(ref int[,] map, ref List<AnimalHolder> animals, int Speed)
         {
@@ -29,13 +26,13 @@ namespace World
                                          Mathf.Abs(position.Item1 - animals[i].CurrentPosition.Item2);
 
 
-                if (distanceToPosition * TileOffset / Speed <= MaxTimeToFood)
+                if (distanceToPosition * GameSettings.TileOffset / Speed <= GameSettings.MaxTimeToFood)
                 {
-                    if (map[position.Item1, position.Item2] == 0)
+                    if (map[position.Item1, position.Item2] != 1)
                     {
                         map[position.Item1, position.Item2] = 1;
                         
-                        var spawnPosition = new Vector3(position.Item1 * TileOffset, 0, position.Item2 * TileOffset);
+                        var spawnPosition = new Vector3(position.Item1 * GameSettings.TileOffset, 0, position.Item2 * GameSettings.TileOffset);
                         var foodGameObject = Instantiate(FoodPrefab, spawnPosition, Quaternion.identity);
 
                         //REFACTOR
@@ -48,7 +45,6 @@ namespace World
                         i++;
                     }
                 }
-
             }
         }
     }

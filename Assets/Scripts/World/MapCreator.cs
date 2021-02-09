@@ -6,8 +6,6 @@ namespace World
     {
         [SerializeField] private GameObject TilePrefab;
 
-        [SerializeField] private float TileOffset = 10f;
-
         private int MapSize;
         private int[,] Map;
 
@@ -20,7 +18,7 @@ namespace World
             {
                 for (int j = 0; j < mapSize; j++)
                 {
-                    var spawnPosition = new Vector3(i * TileOffset, 0, j * TileOffset);
+                    var spawnPosition = new Vector3(i * GameSettings.TileOffset, 0, j * GameSettings.TileOffset);
                     var tile = Instantiate(TilePrefab, spawnPosition, Quaternion.identity);
                     tile.transform.SetParent(gameObject.transform, true);
                 }

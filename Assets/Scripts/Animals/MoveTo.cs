@@ -6,9 +6,6 @@ namespace Animals
     {
         private int DeltaDistance = 1;
 
-        private int TileOffset = 10;
-
-
         //TODO Get from input
         public int Speed = 10;
 
@@ -43,15 +40,9 @@ namespace Animals
         public void CalculateNextPosition()
         {
             var nextPosition = GetNearestNextPosition();
-            if (nextPosition == FoodPositionOnMap)
-            {
-                Debug.Log("We're found food");
-            }
-            else
-            {
-                NextMovingPosition = new Vector3(nextPosition.Item1 * TileOffset, 0, nextPosition.Item2 * TileOffset);
-                Start = true;
-            }
+            NextMovingPosition = new Vector3(nextPosition.Item1 * GameSettings.TileOffset, 0,
+                nextPosition.Item2 * GameSettings.TileOffset);
+            Start = true;
         }
 
         private (int, int) GetNearestNextPosition()
@@ -68,7 +59,7 @@ namespace Animals
             for (int i = 0; i < neighbourPositions.Length; i++)
             {
                 var distanceToPosition = DistanceBetweenTwoDots(FoodPositionOnMap, neighbourPositions[i]);
-                if (distance < distanceToPosition)
+                if (distance >= distanceToPosition)
                 {
                     distance = distanceToPosition;
                     minimalIndex = i;
