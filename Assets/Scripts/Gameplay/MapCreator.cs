@@ -1,18 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MapCreator : MonoBehaviour
 {
     [SerializeField] private GameObject TilePrefab;
 
     [SerializeField] private float TileOffset = 10f;
-    
-    private int MapSize;
 
-    public void CreateMap(int mapSize)
+    private int MapSize;
+    private int[,] Map;
+
+    public int[,] CreateMap(int mapSize)
     {
         MapSize = mapSize;
+        Map = new int[MapSize, MapSize];
 
         for (int i = 0; i < mapSize; i++)
         {
@@ -23,5 +23,7 @@ public class MapCreator : MonoBehaviour
                 tile.transform.SetParent(gameObject.transform, true);
             }
         }
+
+        return Map;
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Gameplay
@@ -16,6 +17,13 @@ namespace Gameplay
         [SerializeField] private Slider SpeedValueSlider;
 
         [SerializeField] private MapCreator MapCreator;
+        [SerializeField] private AnimalCreator AnimalCreator;
+        [SerializeField] private FoodCreator FoodCreator;
+
+        private int[,] GameMap;
+        
+        private List<AnimalHolder> AnimalHolder = new List<AnimalHolder>();
+        
 
 
         void Start()
@@ -29,7 +37,9 @@ namespace Gameplay
             AnimalsAmount = (int) AnimalsAmountSlider.value;
             Speed = (int) SpeedValueSlider.value;
             
-            MapCreator.CreateMap(MapSize);
+            GameMap = MapCreator.CreateMap(MapSize);
+            
+            AnimalHolder = AnimalCreator.CreateAnimals(AnimalsAmount, ref GameMap);
 
             StartButton.onClick.RemoveListener(GetValuesFromSlider);
         }
