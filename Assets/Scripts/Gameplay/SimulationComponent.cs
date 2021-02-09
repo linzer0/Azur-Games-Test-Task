@@ -43,7 +43,7 @@ namespace Gameplay
             GameMap = MapCreator.CreateMap(MapSize);
             
             AnimalHolder = AnimalCreator.CreateAnimals(AnimalsAmount, ref GameMap);
-            // FoodCreator.CreateFood(ref GameMap, ref AnimalHolder, Speed);
+            FoodCreator.CreateFood(ref GameMap, ref AnimalHolder, Speed);
             
             StartButton.onClick.RemoveListener(GetValuesFromSlider);
         }
