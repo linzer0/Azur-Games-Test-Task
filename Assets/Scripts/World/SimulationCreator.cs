@@ -30,7 +30,6 @@ namespace World
         private List<AnimalHolder> AnimalHolder = new List<AnimalHolder>();
         
 
-
         void Start()
         {
             StartButton.onClick.AddListener(GetValuesFromSlider);
@@ -46,17 +45,34 @@ namespace World
             GameMap = MapCreator.CreateMap(MapSize);
             
             AnimalHolder = AnimalCreator.CreateAnimals(AnimalsAmount, ref GameMap);
-            FoodCreator.CreateFood(ref GameMap, ref AnimalHolder, Speed);
-            
+            FoodCreator.CreateFood(ref AnimalHolder);
+
             // StartButton.onClick.RemoveListener(GetValuesFromSlider);
         }
 
+
         public void StartSimulation()
         {
-            foreach (var animalHolder in AnimalHolder)
+            for (var index = 0; index < AnimalHolder.Count; index++)
             {
-                animalHolder.MoveTo.CalculateNextPosition();
+                var animalHolder = AnimalHolder[index];
+                if (!animalHolder.FoodFound)
+                {
+                    animalHolder.MoveTo.CalculateNextPosition();
+                }
+                else
+                {
+                    animalHolder.MoveTo.FoodFound = false;
+                    AnimalHolder[index].CurrentPosition = animalHolder.CurrentPosition;
+                    Destroy(animalHolder.FoodObject);
+                    CreateFood(index);
+                }
             }
+        }
+
+        private void CreateFood(int index)
+        {
+           FoodCreator._CreateFood(index, ref AnimalHolder);
         }
     }
 }

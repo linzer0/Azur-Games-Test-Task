@@ -10,42 +10,43 @@ namespace World
     {
         [SerializeField] private GameObject FoodPrefab;
 
+        private Random random;
 
-        public void CreateFood(ref int[,] map, ref List<AnimalHolder> animals, int Speed)
+
+        public void CreateFood(ref List<AnimalHolder> animals)
         {
-            var random = new Random(new Random(0).Next(1, 10000));
-
-            for (int i = 0; i < animals.Count;)
+            random = new Random(UnityEngine.Random.Range(1, 10000));
+            for (int i = 0; i < animals.Count; i++)
             {
-                int mapSize = map.GetLength(0);
-
-                var position = (random.Next(0, mapSize - 1), random.Next(0, mapSize - 1));
-                //CAN BE REFACTORED
-
-                var distanceToPosition = Math.Abs(position.Item1 - animals[i].CurrentPosition.Item1) +
-                                         Mathf.Abs(position.Item1 - animals[i].CurrentPosition.Item2);
-
-                // if (distanceToPosition * GameSettings.TileOffset / Speed <= GameSettings.MaxTimeToFood)
-                // {
-                // if (map[position.Item1, position.Item2] != 2)
-                {
-                    map[position.Item1, position.Item2] = 1;
-
-                    var spawnPosition = new Vector3(position.Item1 * GameSettings.TileOffset, 0,
-                        position.Item2 * GameSettings.TileOffset);
-                    var foodGameObject = Instantiate(FoodPrefab, spawnPosition, Quaternion.identity);
-
-                    //REFACTOR
-                    animals[i].MoveTo.AnimalPosition = animals[i].CurrentPosition;
-                    animals[i].MoveTo.FoodPositionOnMap = position;
-                    animals[i].MoveTo.FoodPosition = spawnPosition;
-                    animals[i].MoveTo.Map = map;
-
-
-                    i++;
-                }
-                // }
+                _CreateFood(i, ref animals);
             }
+        }
+
+        public void _CreateFood(int index, ref List<AnimalHolder> animals)
+        {
+            int mapSize = GameSettings.MapSize;
+
+            var position = (random.Next(0, mapSize - 1), random.Next(0, mapSize - 1));
+
+            var distanceToPosition = Math.Abs(position.Item1 - animals[index].CurrentPosition.Item1) +
+                                     Mathf.Abs(position.Item1 - animals[index].CurrentPosition.Item2);
+
+            GameSettings.Map[position.Item1, position.Item2] = 1;
+
+            var spawnPosition = new Vector3(position.Item1 * GameSettings.TileOffset, 0,
+                position.Item2 * GameSettings.TileOffset);
+            var foodGameObject = Instantiate(FoodPrefab, spawnPosition, Quaternion.identity);
+
+            //REFACTOR
+
+            (int, int ) defaultTuple = default;
+            if (animals[index].MoveTo.AnimalPosition == defaultTuple)
+            {
+                animals[index].MoveTo.AnimalPosition = animals[index].CurrentPosition;
+            }
+
+            animals[index].MoveTo.FoodPositionOnMap = position;
+            animals[index].FoodObject = foodGameObject;
         }
     }
 }
