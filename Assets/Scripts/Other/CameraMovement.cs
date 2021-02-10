@@ -4,9 +4,8 @@ namespace Other
 {
     public class CameraMovement : MonoBehaviour
     {
-        public float Speed = 5.0f;
-
-        public float scale = 1.0f;
+        [SerializeField] private float Speed = 5.0f;
+        [SerializeField] private float VerticalSpeed = 1.0f;
 
         void Update()
         {
@@ -18,7 +17,7 @@ namespace Other
                 objectTransform.position += Vector3.forward * (verticalValue * (Speed * Time.deltaTime));
             }
 
-            transform.position += new Vector3(0, (-1) * Input.mouseScrollDelta.y * scale, 0);
+            transform.position += new Vector3(0, (-1) * Input.mouseScrollDelta.y * VerticalSpeed, 0);
 
             if (Input.GetButton("Horizontal"))
             {

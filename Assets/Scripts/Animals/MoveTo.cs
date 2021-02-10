@@ -95,6 +95,5 @@ namespace Animals
 
             return minimalElementIndex == -1 ? AnimalPosition : neighbourPositions[minimalElementIndex];
         }
-
     }
 }
