@@ -11,10 +11,9 @@ namespace World
 
         private Random random;
 
-
         public void CreateFood(ref List<AnimalHolder> animals)
         {
-            random = new Random(UnityEngine.Random.Range(1, 10000));
+            random = new Random(animals.Count + UnityEngine.Random.Range(1, 10000));
             for (int i = 0; i < animals.Count; i++)
             {
                 _CreateFood(i, ref animals);
