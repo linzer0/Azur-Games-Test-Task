@@ -20,7 +20,7 @@ namespace World
                 {
                     var spawnPosition = new Vector3(i * GameSettings.TileOffset, 0, j * GameSettings.TileOffset);
                     var tile = Instantiate(TilePrefab, spawnPosition, Quaternion.identity);
-                    tile.transform.SetParent(gameObject.transform, true);
+                    tile.transform.SetParent(gameObject.transform, false);
                 }
             }
 

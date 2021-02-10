@@ -107,6 +107,7 @@ namespace World
         {
             if (EffectPrefab != null)
             {
+                // effectPosition.y += 2;
                 var effectGameObject = Instantiate(EffectPrefab, effectPosition, Quaternion.identity);
                 Destroy(effectGameObject, lifeTime);
             }
