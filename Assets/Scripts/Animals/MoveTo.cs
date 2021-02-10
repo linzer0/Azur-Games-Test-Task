@@ -70,7 +70,7 @@ namespace Animals
                 (AnimalPosition.Item1, AnimalPosition.Item2 + 1), (AnimalPosition.Item1, AnimalPosition.Item2 - 1)
             };
 
-            ListExtension.Shuffle(neighbourPositions);
+            Helper.Shuffle(neighbourPositions);
 
             int minimalElementIndex = -1,
                 minimalDistanceToAnotherPosition = 100;
@@ -82,7 +82,7 @@ namespace Animals
                 {
                     if (GameSettings.Map[neighbourPositions[i].Item1, neighbourPositions[i].Item2] != 2)
                     {
-                        var distanceToPosition = DistanceBetweenTwoDots(FoodPositionOnMap, neighbourPositions[i]);
+                        var distanceToPosition = Helper.DistanceBetweenTwoDots(FoodPositionOnMap, neighbourPositions[i]);
                         if (minimalDistanceToAnotherPosition >= distanceToPosition)
                         {
                             minimalDistanceToAnotherPosition = distanceToPosition;
@@ -95,9 +95,5 @@ namespace Animals
             return minimalElementIndex == -1 ? AnimalPosition : neighbourPositions[minimalElementIndex];
         }
 
-        private int DistanceBetweenTwoDots((int, int) first, (int, int) second)
-        {
-            return Mathf.Abs(first.Item1 - second.Item1) + Mathf.Abs(first.Item2 - second.Item2);
-        }
     }
 }

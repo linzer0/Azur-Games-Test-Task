@@ -2,7 +2,7 @@
 using UnityEngine;
 using Random = System.Random;
 
-public class ListExtension : MonoBehaviour
+public class Helper : MonoBehaviour
 {
     private static Random random = new Random();  
 
@@ -16,6 +16,10 @@ public class ListExtension : MonoBehaviour
             list[randomIndex] = list[listCount];  
             list[listCount] = value;  
         }  
+    }
+    public static int DistanceBetweenTwoDots((int, int) first, (int, int) second)
+    {
+        return Mathf.Abs(first.Item1 - second.Item1) + Mathf.Abs(first.Item2 - second.Item2);
     }
 }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Animals;
 using UnityEngine;
 using Random = System.Random;
@@ -24,22 +23,14 @@ namespace World
 
         public void _CreateFood(int index, ref List<AnimalHolder> animals)
         {
-            int mapSize = GameSettings.MapSize;
+            var foodPositionOnMap = GetFoodPosition(animals[index].CurrentPosition);
 
-            var position = (random.Next(0, mapSize - 1), random.Next(0, mapSize - 1));
+            GameSettings.Map[foodPositionOnMap.Item1, foodPositionOnMap.Item2] = 1;
 
-            
-            //TODO ADD LOGIC 5 second moving
-            var distanceToPosition = Math.Abs(position.Item1 - animals[index].CurrentPosition.Item1) +
-                                     Mathf.Abs(position.Item1 - animals[index].CurrentPosition.Item2);
-
-            GameSettings.Map[position.Item1, position.Item2] = 1;
-
-            var spawnPosition = new Vector3(position.Item1 * GameSettings.TileOffset, 0,
-                position.Item2 * GameSettings.TileOffset);
+            var spawnPosition = new Vector3(foodPositionOnMap.Item1 * GameSettings.TileOffset, 0,
+                foodPositionOnMap.Item2 * GameSettings.TileOffset);
             var foodGameObject = Instantiate(FoodPrefab, spawnPosition, Quaternion.identity);
 
-            //REFACTOR
 
             (int, int ) defaultTuple = default;
             if (animals[index].MoveTo.AnimalPosition == defaultTuple)
@@ -47,8 +38,30 @@ namespace World
                 animals[index].MoveTo.AnimalPosition = animals[index].CurrentPosition;
             }
 
-            animals[index].MoveTo.FoodPositionOnMap = position;
+            animals[index].MoveTo.FoodPositionOnMap = foodPositionOnMap;
             animals[index].FoodObject = foodGameObject;
+        }
+
+        private (int, int) GetFoodPosition((int, int) animalPosition)
+        {
+            int iterations = 5;
+            int mapSize = GameSettings.MapSize;
+
+            var potentialPosition = (random.Next(0, mapSize - 1), random.Next(0, mapSize - 1));
+            int distanceToPosition = Helper.DistanceBetweenTwoDots(potentialPosition, animalPosition);
+
+            while (distanceToPosition / GameSettings.AnimalSpeed > GameSettings.MaxTimeToFood &&
+                   GameSettings.Map[potentialPosition.Item1, potentialPosition.Item2] != 1)
+            {
+                potentialPosition = (random.Next(0, mapSize - 1), random.Next(0, mapSize - 1));
+                iterations--;
+                if (iterations <= 0)
+                {
+                    break;
+                }
+            }
+
+            return potentialPosition;
         }
     }
 }
