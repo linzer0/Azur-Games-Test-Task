@@ -1333,6 +1333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimalPrefab: {fileID: 4799598242647748100, guid: 9c8e4812238dcb7449f97703b2645b35, type: 3}
+  SimulationCreator: {fileID: 0}
 --- !u!114 &1904095648
 MonoBehaviour:
   m_ObjectHideFlags: 0

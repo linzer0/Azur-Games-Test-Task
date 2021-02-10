@@ -36,18 +36,16 @@ namespace Animals
                 }
                 else
                 {
-                    // CalculateNextPosition();
+                    CalculateNextPosition();
                 }
 
-
-                MovingIsAllowed = false;
             }
         }
 
         private void OnFoodFound()
         {
             FoodFound = true;
-            animalHolder.StartSimulation();
+            animalHolder.OnFoodFound();
         }
 
         public void CalculateNextPosition()

@@ -8,6 +8,9 @@ namespace World
     public class AnimalCreator : MonoBehaviour
     {
         [SerializeField] private GameObject AnimalPrefab;
+
+        public SimulationCreator SimulationCreator;
+        
         private int AnimalsAmount;
 
         private int MapSize;
@@ -33,6 +36,7 @@ namespace World
 
                     var animalHolder = animalGameObject.GetComponent<AnimalHolder>();
                     animalHolder.CurrentPosition = position;
+                    animalHolder.SimulationCreator = SimulationCreator;
 
                     animalHolderList.Add(animalHolder);
 

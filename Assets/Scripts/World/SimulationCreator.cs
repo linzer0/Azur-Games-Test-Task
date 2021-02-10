@@ -27,12 +27,13 @@ namespace World
         //1 - food
         //2 - animal
         
-        private List<AnimalHolder> AnimalHolder = new List<AnimalHolder>();
+        private List<AnimalHolder> AnimalHolderList = new List<AnimalHolder>();
         
 
         void Start()
         {
             StartButton.onClick.AddListener(GetValuesFromSlider);
+            AnimalCreator.SimulationCreator = this;
         }
 
         void GetValuesFromSlider()
@@ -44,8 +45,8 @@ namespace World
             
             GameMap = MapCreator.CreateMap(MapSize);
             
-            AnimalHolder = AnimalCreator.CreateAnimals(AnimalsAmount, ref GameMap);
-            FoodCreator.CreateFood(ref AnimalHolder);
+            AnimalHolderList = AnimalCreator.CreateAnimals(AnimalsAmount, ref GameMap);
+            FoodCreator.CreateFood(ref AnimalHolderList);
 
             // StartButton.onClick.RemoveListener(GetValuesFromSlider);
         }
@@ -53,9 +54,9 @@ namespace World
 
         public void StartSimulation()
         {
-            for (var index = 0; index < AnimalHolder.Count; index++)
+            for (var index = 0; index < AnimalHolderList.Count; index++)
             {
-                var animalHolder = AnimalHolder[index];
+                var animalHolder = AnimalHolderList[index];
                 if (!animalHolder.FoodFound)
                 {
                     animalHolder.MoveTo.CalculateNextPosition();
@@ -63,7 +64,7 @@ namespace World
                 else
                 {
                     animalHolder.MoveTo.FoodFound = false;
-                    AnimalHolder[index].CurrentPosition = animalHolder.CurrentPosition;
+                    AnimalHolderList[index].CurrentPosition = animalHolder.CurrentPosition;
                     Destroy(animalHolder.FoodObject);
                     CreateFood(index);
                 }
@@ -72,7 +73,21 @@ namespace World
 
         private void CreateFood(int index)
         {
-           FoodCreator._CreateFood(index, ref AnimalHolder);
+           FoodCreator._CreateFood(index, ref AnimalHolderList);
+        }
+
+        public void CreateFood(AnimalHolder animalHolder)
+        {
+            int index = AnimalHolderList.IndexOf(animalHolder);
+            if (index != -1)
+            {
+                    AnimalHolderList[index].CurrentPosition = animalHolder.CurrentPosition;
+                CreateFood(index);
+            }
+            else
+            {
+                Debug.Log("Not found");
+            }
         }
     }
 }

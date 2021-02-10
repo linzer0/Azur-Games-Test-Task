@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using World;
 
 namespace Animals
 {
@@ -6,7 +7,13 @@ namespace Animals
     {
         [SerializeField] private MoveTo moveTo;
 
-        public bool FoodFound => MoveTo.FoodFound;
+        public SimulationCreator SimulationCreator;
+
+        public bool FoodFound
+        {
+            get => MoveTo.FoodFound;
+            set => MoveTo.FoodFound = value;
+        }
 
         public MoveTo MoveTo
         {
@@ -23,18 +30,11 @@ namespace Animals
         }
 
 
-        public void StartSimulation()
+        public void OnFoodFound()
         {
-            if (FoodFound)
-            {
-                // MoveTo.FoodFound = false;
-                Destroy(FoodObject);
-                // CreateFood(index);
-            }
-            else
-            {
-                MoveTo.CalculateNextPosition();
-            }
+            FoodFound = false;
+            Destroy(FoodObject);
+            SimulationCreator.CreateFood(this);
         }
     }
 }
