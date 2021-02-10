@@ -18,5 +18,10 @@ namespace UI
             CurrentFromSlider.maxValue = (int) value * value / 2;
             CurrentFromSlider.onValueChanged.Invoke(CurrentFromSlider.value);
         }
+
+        private void OnDestroy()
+        {
+            DependsFromSlider.onValueChanged.RemoveAllListeners();
+        }
     }
 }

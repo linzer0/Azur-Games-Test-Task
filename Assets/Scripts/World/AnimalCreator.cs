@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Animals;
+using Other;
 using UnityEngine;
 using Random = System.Random;
 
@@ -9,10 +10,10 @@ namespace World
     {
         [SerializeField] private GameObject AnimalPrefab;
 
+        private int AnimalsAmount;
+        
         public SimulationCreator SimulationCreator;
         
-        private int AnimalsAmount;
-
         public List<AnimalHolder> CreateAnimals(int amount)
         {
             var animalHolderList = new List<AnimalHolder>();

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Other;
 using UnityEngine;
 
 namespace Animals
@@ -10,11 +11,11 @@ namespace Animals
         public (int, int) AnimalPosition;
 
         public bool MovingIsAllowed;
+        public bool FoodFound;
 
 
         private Vector3 NextMovingPosition;
         private float DeltaDistance = 0.25f;
-        public bool FoodFound;
 
         void Update()
         {

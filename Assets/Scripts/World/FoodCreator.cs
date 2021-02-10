@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Animals;
+using Other;
 using UnityEngine;
 using Random = System.Random;
 

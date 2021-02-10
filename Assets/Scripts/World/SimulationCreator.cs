@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Animals;
-using Gameplay;
+using Other;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,13 +32,8 @@ namespace World
 
         [SerializeField] private GameObject EffectPrefab;
 
-        //0 - free
-        //1 - food
-        //2 - animal
-        
         private List<AnimalHolder> AnimalHolderList = new List<AnimalHolder>();
         
-
         void Start()
         {
             StartButton.onClick.AddListener(OnStartClick);
@@ -65,7 +60,6 @@ namespace World
             GameSettings.AnimalSpeed = Speed;
             GameSettings.Map = MapCreator.CreateMap(MapSize);
         }
-
 
         public void StartSimulation()
         {
@@ -114,11 +108,10 @@ namespace World
 
         private void CreateEffect(Vector3 effectPosition, float lifeTime = 1.0f)
         {
-            if (EffectPrefab != null)
-            {
-                var effectGameObject = Instantiate(EffectPrefab, effectPosition, Quaternion.identity);
-                Destroy(effectGameObject, lifeTime);
-            }
+            if (EffectPrefab == null) return;
+            
+            var effectGameObject = Instantiate(EffectPrefab, effectPosition, Quaternion.identity);
+            Destroy(effectGameObject, lifeTime);
         }
     }
 }

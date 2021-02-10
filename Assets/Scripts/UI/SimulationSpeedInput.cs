@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Other;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI

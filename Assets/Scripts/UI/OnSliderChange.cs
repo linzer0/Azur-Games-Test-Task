@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,9 +15,14 @@ namespace UI
             Slider.onValueChanged.AddListener(UpdateText);
         }
 
-        void UpdateText(float sliderValue)
+        private void UpdateText(float sliderValue)
         {
             Text.SetText(sliderValue.ToString());
+        }
+
+        private void OnDestroy()
+        {
+            Slider.onValueChanged.RemoveAllListeners();
         }
     }
 }
