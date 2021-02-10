@@ -27,7 +27,7 @@ namespace Animals
         {
             if (FoodFound)
             {
-                MoveTo.FoodFound = false;
+                // MoveTo.FoodFound = false;
                 Destroy(FoodObject);
                 // CreateFood(index);
             }

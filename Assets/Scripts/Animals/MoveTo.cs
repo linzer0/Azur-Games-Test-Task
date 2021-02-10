@@ -46,8 +46,8 @@ namespace Animals
 
         private void OnFoodFound()
         {
-            animalHolder.StartSimulation();
             FoodFound = true;
+            animalHolder.StartSimulation();
         }
 
         public void CalculateNextPosition()
