@@ -12,29 +12,22 @@ namespace Animals
         public bool FoodFound
         {
             get => MoveTo.FoodFound;
-            set => MoveTo.FoodFound = value;
+            private set => MoveTo.FoodFound = value;
         }
 
-        public MoveTo MoveTo
-        {
-            get => moveTo;
-            set => moveTo = value;
-        }
-
+        public MoveTo MoveTo => moveTo;
         public GameObject FoodObject;
         public (int, int) CurrentPosition;
 
-        void Start()
+        private void Start()
         {
             MoveTo.animalHolder = this;
         }
 
-
         public void OnFoodFound()
         {
+            SimulationCreator.OnFoodFound(this);
             FoodFound = false;
-            Destroy(FoodObject);
-            SimulationCreator.CreateFood(this);
         }
     }
 }

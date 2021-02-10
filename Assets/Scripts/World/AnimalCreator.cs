@@ -13,19 +13,16 @@ namespace World
         
         private int AnimalsAmount;
 
-        private int MapSize;
-
-        public List<AnimalHolder> CreateAnimals(int amount, ref int[,] map)
+        public List<AnimalHolder> CreateAnimals(int amount)
         {
             var animalHolderList = new List<AnimalHolder>();
             var random = new Random();
 
             AnimalsAmount = amount;
-            MapSize = map.GetLength(0);
 
             for (int i = 0; i < AnimalsAmount;)
             {
-                var position = (random.Next(0, MapSize - 1), random.Next(0, MapSize - 1));
+                var position = (random.Next(0, GameSettings.MapSize - 1), random.Next(0, GameSettings.MapSize - 1));
                 if (GameSettings.Map[position.Item1, position.Item2] != 2)
                 {
                     GameSettings.Map[position.Item1, position.Item2] = 2;

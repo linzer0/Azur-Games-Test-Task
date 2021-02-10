@@ -12,7 +12,7 @@ namespace World
         public int[,] CreateMap(int mapSize)
         {
             MapSize = mapSize;
-            GameSettings.Map = new int[MapSize, MapSize];
+            Map = new int[MapSize, MapSize];
 
             for (int i = 0; i < mapSize; i++)
             {
@@ -24,7 +24,7 @@ namespace World
                 }
             }
 
-            return GameSettings.Map;
+            return Map;
         }
     }
 }

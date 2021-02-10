@@ -12,17 +12,23 @@ namespace World
         private int AnimalsAmount;
         private int Speed;
 
-        [SerializeField] private Button StartButton;
 
+        [Header("UI")]
+        [SerializeField] private Button StartButton;
+        
         [SerializeField] private Slider MapSizeSlider;
         [SerializeField] private Slider AnimalsAmountSlider;
         [SerializeField] private Slider SpeedValueSlider;
 
+        [Header("Simulation")]
         [SerializeField] private MapCreator MapCreator;
         [SerializeField] private AnimalCreator AnimalCreator;
         [SerializeField] private FoodCreator FoodCreator;
+        
+        [Header("FX")]
 
-        private int[,] GameMap;
+        [SerializeField] private GameObject EffectPrefab;
+
         //0 - free
         //1 - food
         //2 - animal
@@ -43,9 +49,9 @@ namespace World
             Speed = (int) SpeedValueSlider.value;
             GameSettings.AnimalSpeed = Speed;
             
-            GameMap = MapCreator.CreateMap(MapSize);
-            
-            AnimalHolderList = AnimalCreator.CreateAnimals(AnimalsAmount, ref GameMap);
+            GameSettings.Map = MapCreator.CreateMap(MapSize);
+
+            AnimalHolderList = AnimalCreator.CreateAnimals(AnimalsAmount);
             FoodCreator.CreateFood(ref AnimalHolderList);
 
             // StartButton.onClick.RemoveListener(GetValuesFromSlider);
@@ -76,17 +82,33 @@ namespace World
            FoodCreator._CreateFood(index, ref AnimalHolderList);
         }
 
-        public void CreateFood(AnimalHolder animalHolder)
+        private void CreateFood(AnimalHolder animalHolder)
         {
             int index = AnimalHolderList.IndexOf(animalHolder);
             if (index != -1)
             {
-                    AnimalHolderList[index].CurrentPosition = animalHolder.CurrentPosition;
+                AnimalHolderList[index].CurrentPosition = animalHolder.CurrentPosition;
                 CreateFood(index);
             }
             else
             {
                 Debug.Log("Not found");
+            }
+        }
+
+        public void OnFoodFound(AnimalHolder animalHolder)
+        {
+            CreateEffect(animalHolder.FoodObject.transform.position);
+            Destroy(animalHolder.FoodObject);
+            CreateFood(animalHolder);
+        }
+
+        private void CreateEffect(Vector3 effectPosition, float lifeTime = 1.0f)
+        {
+            if (EffectPrefab != null)
+            {
+                var effectGameObject = Instantiate(EffectPrefab, effectPosition, Quaternion.identity);
+                Destroy(effectGameObject, lifeTime);
             }
         }
     }

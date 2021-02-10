@@ -28,6 +28,8 @@ namespace World
 
             var position = (random.Next(0, mapSize - 1), random.Next(0, mapSize - 1));
 
+            
+            //TODO ADD LOGIC 5 second moving
             var distanceToPosition = Math.Abs(position.Item1 - animals[index].CurrentPosition.Item1) +
                                      Mathf.Abs(position.Item1 - animals[index].CurrentPosition.Item2);
 
