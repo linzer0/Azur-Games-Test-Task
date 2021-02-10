@@ -11,10 +11,10 @@ namespace UI
 
         void Start()
         {
-            Slider.onValueChanged.AddListener(Temp);
+            Slider.onValueChanged.AddListener(UpdateText);
         }
 
-        void Temp(float sliderValue)
+        void UpdateText(float sliderValue)
         {
             Text.SetText(sliderValue.ToString());
         }

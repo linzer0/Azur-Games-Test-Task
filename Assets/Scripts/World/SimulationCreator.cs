@@ -13,7 +13,10 @@ namespace World
         private int Speed;
 
 
-        [Header("UI")]
+        [Header("UI")] 
+        [SerializeField] private GameObject NewSimulationHolder;
+        [SerializeField] private GameObject SimulationHolder;
+        
         [SerializeField] private Button StartButton;
         
         [SerializeField] private Slider MapSizeSlider;
@@ -38,8 +41,19 @@ namespace World
 
         void Start()
         {
-            StartButton.onClick.AddListener(GetValuesFromSlider);
+            StartButton.onClick.AddListener(OnStartClick);
             AnimalCreator.SimulationCreator = this;
+        }
+
+        private void OnStartClick()
+        {
+           GetValuesFromSlider();
+           
+            AnimalHolderList = AnimalCreator.CreateAnimals(AnimalsAmount);
+            FoodCreator.CreateFood(ref AnimalHolderList);
+            
+            NewSimulationHolder.SetActive(false);
+            SimulationHolder.SetActive(true);
         }
 
         void GetValuesFromSlider()
@@ -47,14 +61,9 @@ namespace World
             MapSize = (int) MapSizeSlider.value;
             AnimalsAmount = (int) AnimalsAmountSlider.value;
             Speed = (int) SpeedValueSlider.value;
-            GameSettings.AnimalSpeed = Speed;
             
+            GameSettings.AnimalSpeed = Speed;
             GameSettings.Map = MapCreator.CreateMap(MapSize);
-
-            AnimalHolderList = AnimalCreator.CreateAnimals(AnimalsAmount);
-            FoodCreator.CreateFood(ref AnimalHolderList);
-
-            // StartButton.onClick.RemoveListener(GetValuesFromSlider);
         }
 
 
@@ -107,7 +116,6 @@ namespace World
         {
             if (EffectPrefab != null)
             {
-                // effectPosition.y += 2;
                 var effectGameObject = Instantiate(EffectPrefab, effectPosition, Quaternion.identity);
                 Destroy(effectGameObject, lifeTime);
             }
