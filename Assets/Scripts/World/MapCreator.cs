@@ -1,5 +1,4 @@
-﻿using Other;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace World
 {
@@ -15,15 +14,12 @@ namespace World
             MapSize = mapSize;
             Map = new int[MapSize, MapSize];
 
-            for (int i = 0; i < mapSize; i++)
-            {
-                for (int j = 0; j < mapSize; j++)
-                {
-                    var spawnPosition = new Vector3(i * GameSettings.TileOffset, 0, j * GameSettings.TileOffset);
-                    var tile = Instantiate(TilePrefab, spawnPosition, Quaternion.identity);
-                    tile.transform.SetParent(gameObject.transform, false);
-                }
-            }
+            var position = 5 * mapSize - 5;
+            var spawnPosition = new Vector3(position, 0, position);
+            
+            var tile = Instantiate(TilePrefab, spawnPosition, Quaternion.identity);
+            tile.transform.localScale = new Vector3(mapSize, 1, mapSize);
+            tile.transform.SetParent(gameObject.transform, false);
 
             return Map;
         }
